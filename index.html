@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PNGtuber Transparan with Controls</title>
+    <title>PNGtuber Transparan Auto Mic</title>
     <style>
         html, body {
             margin: 0;
@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: #ffffff;
         }
 
@@ -39,7 +39,9 @@
             display: none;
         }
 
+        /* Tombol darurat jika browser memblokir auto-mic */
         #start-btn {
+            display: none;
             position: absolute;
             z-index: 1000;
             padding: 14px 28px;
@@ -52,16 +54,9 @@
             cursor: pointer;
             backdrop-filter: blur(8px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        #start-btn:hover {
-            background-color: rgba(255, 107, 129, 0.9);
-            transform: scale(1.05);
         }
 
         #toggle-panel-btn {
-            display: none;
             position: absolute;
             top: 15px;
             left: 15px;
@@ -179,12 +174,6 @@
             background: #D0BCFF;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.1s ease, background-color 0.1s ease;
-        }
-
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            background: #E8DEF8;
         }
 
         input[type=range]::-moz-range-thumb {
@@ -194,19 +183,12 @@
             border-radius: 8px;
             background: #D0BCFF;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.1s ease, background-color 0.1s ease;
-        }
-
-        input[type=range]::-moz-range-thumb:hover {
-            transform: scale(1.1);
-            background: #E8DEF8;
         }
     </style>
 </head>
 <body>
 
-    <button id="start-btn">Klik untuk Aktifkan Mikrofon</button>
+    <button id="start-btn">Aktifkan Mikrofon</button>
 
     <button id="toggle-panel-btn" title="Pengaturan Sensitivitas">
         <svg viewBox="0 0 24 24">
@@ -272,8 +254,6 @@
 
         startBtn.addEventListener('click', () => {
             startBtn.style.display = 'none';
-            togglePanelBtn.style.display = 'flex';
-            controlPanel.style.display = 'block';
             initAudio();
         });
 
@@ -282,6 +262,11 @@
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
                 
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                if (audioContext.state === 'suspended') {
+                    await audioContext.resume();
+                }
+
                 const analyser = audioContext.createAnalyser();
                 const microphone = audioContext.createMediaStreamSource(stream);
                 
@@ -321,9 +306,19 @@
                 };
 
             } catch (err) {
-                alert('Gagal mengakses mikrofon: ' + err);
+                startBtn.style.display = 'block';
             }
         }
+
+        // Langsung coba aktifkan mic saat halaman dibuka
+        window.addEventListener('load', () => {
+            initAudio();
+        });
+
+        // Buka mic otomatis pada sentuhan/klik pertama di mana saja
+        window.addEventListener('click', () => {
+            initAudio();
+        }, { once: true });
     </script>
 </body>
 </html>
