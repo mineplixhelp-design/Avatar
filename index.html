@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNGtuber Transparan with Controls</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0) !important;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #ffffff;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #bicara {
+            display: none;
+        }
+
+        #start-btn {
+            position: absolute;
+            z-index: 1000;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: rgba(255, 71, 87, 0.85);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        #start-btn:hover {
+            background-color: rgba(255, 107, 129, 0.9);
+            transform: scale(1.05);
+        }
+
+        #toggle-panel-btn {
+            display: none;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 999;
+            width: 44px;
+            height: 44px;
+            background: rgba(18, 18, 18, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            color: #ffffff;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        #toggle-panel-btn:hover {
+            background: rgba(18, 18, 18, 0.35);
+            transform: scale(1.04);
+        }
+
+        #toggle-panel-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: rgba(255, 255, 255, 0.9);
+        }
+
+        .control-panel {
+            display: none;
+            position: absolute;
+            top: 68px;
+            left: 15px;
+            z-index: 998;
+            width: 260px;
+            padding: 20px;
+            background: rgba(18, 18, 18, 0.2);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .control-group {
+            margin-bottom: 16px;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .meter-container {
+            position: relative;
+            width: 100%;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        #volume-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #6750A4 0%, #D0BCFF 100%);
+            border-radius: 12px;
+            transition: width 0.08s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        #threshold-marker {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #F2B8B5;
+            border-radius: 2px;
+            box-shadow: 0 0 6px rgba(242, 184, 181, 0.6);
+            z-index: 2;
+            left: 20%;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            outline: none;
+            margin: 0;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 8px;
+            background: #D0BCFF;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s ease, background-color 0.1s ease;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: #E8DEF8;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 8px;
+            background: #D0BCFF;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s ease, background-color 0.1s ease;
+        }
+
+        input[type=range]::-moz-range-thumb:hover {
+            transform: scale(1.1);
+            background: #E8DEF8;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="start-btn">Klik untuk Aktifkan Mikrofon</button>
+
+    <button id="toggle-panel-btn" title="Pengaturan Sensitivitas">
+        <svg viewBox="0 0 24 24">
+            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+        </svg>
+    </button>
+
+    <div class="control-panel" id="control-panel">
+        <div class="panel-title">Pengaturan Suara</div>
+        
+        <div class="control-group">
+            <div class="control-label">
+                <span>Input Volume</span>
+                <span id="volume-text">0%</span>
+            </div>
+            <div class="meter-container">
+                <div id="volume-bar"></div>
+                <div id="threshold-marker"></div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="control-label">
+                <span>Batas Bicara (Threshold)</span>
+                <span id="sensitivity-text">20</span>
+            </div>
+            <input type="range" id="sensitivity-slider" min="1" max="100" value="20">
+        </div>
+    </div>
+
+    <div class="avatar-container">
+        <img id="diam" class="avatar" src="diam.png" alt="Avatar Diam">
+        <img id="bicara" class="avatar" src="bicara.png" alt="Avatar Bicara">
+    </div>
+
+    <script>
+        const imgDiam = document.getElementById('diam');
+        const imgBicara = document.getElementById('bicara');
+        const startBtn = document.getElementById('start-btn');
+        const togglePanelBtn = document.getElementById('toggle-panel-btn');
+        const controlPanel = document.getElementById('control-panel');
+        const sensitivitySlider = document.getElementById('sensitivity-slider');
+        const sensitivityText = document.getElementById('sensitivity-text');
+        const volumeBar = document.getElementById('volume-bar');
+        const volumeText = document.getElementById('volume-text');
+        const thresholdMarker = document.getElementById('threshold-marker');
+
+        let sensitivityThreshold = 20;
+
+        togglePanelBtn.addEventListener('click', () => {
+            if (controlPanel.style.display === 'none' || controlPanel.style.display === '') {
+                controlPanel.style.display = 'block';
+            } else {
+                controlPanel.style.display = 'none';
+            }
+        });
+
+        sensitivitySlider.addEventListener('input', (e) => {
+            sensitivityThreshold = parseInt(e.target.value, 10);
+            sensitivityText.innerText = sensitivityThreshold;
+            thresholdMarker.style.left = `${sensitivityThreshold}%`;
+        });
+
+        startBtn.addEventListener('click', () => {
+            startBtn.style.display = 'none';
+            togglePanelBtn.style.display = 'flex';
+            controlPanel.style.display = 'block';
+            initAudio();
+        });
+
+        async function initAudio() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioContext.createAnalyser();
+                const microphone = audioContext.createMediaStreamSource(stream);
+                
+                analyser.fftSize = 512;
+                analyser.smoothingTimeConstant = 0.2;
+                
+                const javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+
+                microphone.connect(analyser);
+                analyser.connect(javascriptNode);
+                javascriptNode.connect(audioContext.destination);
+
+                javascriptNode.onaudioprocess = function() {
+                    const array = new Uint8Array(analyser.frequencyBinCount);
+                    analyser.getByteFrequencyData(array);
+
+                    let values = 0;
+                    const length = array.length;
+                    
+                    for (let i = 0; i < length; i++) {
+                        values += array[i];
+                    }
+
+                    const average = values / length;
+                    const volumePercentage = Math.min(100, Math.round((average / 128) * 100));
+
+                    volumeBar.style.width = `${volumePercentage}%`;
+                    volumeText.innerText = `${volumePercentage}%`;
+
+                    if (volumePercentage > sensitivityThreshold) {
+                        imgDiam.style.display = 'none';
+                        imgBicara.style.display = 'block';
+                    } else {
+                        imgDiam.style.display = 'block';
+                        imgBicara.style.display = 'none';
+                    }
+                };
+
+            } catch (err) {
+                alert('Gagal mengakses mikrofon: ' + err);
+            }
+        }
+    </script>
+</body>
+</html>
