@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mineplix Achievement Cards Decor</title>
     
+    <!-- Google Fonts: Press Start 2P -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        /* Reset & Setup Window */
         html, body {
             margin: 0;
             padding: 0;
@@ -21,6 +24,7 @@
             width: 100%;
         }
 
+        /* Minecraft Achievement Toast Frame Mini */
         .mc-toast-mini {
             background-color: rgba(33, 33, 33, 1);
             border: 2px solid #000000;
@@ -28,10 +32,11 @@
             padding: 10px 14px;
         }
 
+        /* Typography Minecraft (Rata Kiri / Left-Aligned) */
         .mc-title {
             color: #FFFF55;
             text-shadow: 1px 1px 0px #3F3F00;
-            font-size: 16px;
+            font-size: 10px;
             line-height: 1.5;
             display: block;
             width: 100%;
@@ -41,7 +46,7 @@
         .mc-subtext {
             color: #FFFFFF;
             text-shadow: 1px 1px 0px #3F3F3F;
-            font-size: 11px;
+            font-size: 8px;
             line-height: 1.5;
             display: block;
             width: 100%;
@@ -53,17 +58,26 @@
 
 <body class="p-3 flex justify-center">
 
-    <div class="flex flex-col w-full max-w-[280px]">
+    <!-- Container Utama dengan gap antar card diperbesar -->
+    <div class="flex flex-col gap-4 w-full max-w-[280px]">
 
+        <!-- CARD 1: JAVA EDITION -->
         <div class="mc-toast-mini flex flex-col justify-center">
-            <span class="mc-title">
-                Ayo bermain bersama :
+            <span class="mc-title uppercase">
+                Java Edition
             </span>
             <span class="mc-subtext">
-                Java: go.mineplix.biz.id
+                go.mineplix.biz.id
+            </span>
+        </div>
+
+        <!-- CARD 2: BEDROCK EDITION -->
+        <div class="mc-toast-mini flex flex-col justify-center">
+            <span class="mc-title uppercase">
+                Bedrock Edition
             </span>
             <span class="mc-subtext">
-                Bedrock: go.mineplix.biz.id:25565
+                go.mineplix.biz.id:25565
             </span>
         </div>
 
