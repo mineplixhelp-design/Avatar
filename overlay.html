@@ -5,16 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mineplix Achievement Cards Decor</title>
     
-    <!-- Google Fonts: Press Start 2P -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-        /* Reset & Setup Window */
         html, body {
             margin: 0;
             padding: 0;
@@ -24,28 +19,45 @@
             width: 100%;
         }
 
-        /* Minecraft Achievement Toast Frame Mini */
+        body {
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 280px;
+        }
+
         .mc-toast-mini {
-            background-color: rgba(33, 33, 33, 1);
+            background-color: #222;
             border: 2px solid #000000;
             image-rendering: pixelated;
             padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        /* Typography Minecraft (Rata Kiri / Left-Aligned) */
+        .mc-toast-mini:not(:last-child) {
+            margin-bottom: 24px;
+        }
+
         .mc-title {
             color: #FFFF55;
-            text-shadow: 1px 1px 0px #3F3F00;
-            font-size: 10px;
+            font-size: 12px;
             line-height: 1.5;
             display: block;
             width: 100%;
             text-align: left;
+            text-transform: uppercase;
         }
 
         .mc-subtext {
             color: #FFFFFF;
-            text-shadow: 1px 1px 0px #3F3F3F;
             font-size: 8px;
             line-height: 1.5;
             display: block;
@@ -56,14 +68,12 @@
     </style>
 </head>
 
-<body class="p-3 flex justify-center">
+<body>
 
-    <!-- Container Utama dengan gap antar card diperbesar -->
-    <div class="flex flex-col gap-4 w-full max-w-[280px]">
+    <div class="container">
 
-        <!-- CARD 1: JAVA EDITION -->
-        <div class="mc-toast-mini flex flex-col justify-center">
-            <span class="mc-title uppercase">
+        <div class="mc-toast-mini">
+            <span class="mc-title">
                 Java Edition
             </span>
             <span class="mc-subtext">
@@ -71,9 +81,8 @@
             </span>
         </div>
 
-        <!-- CARD 2: BEDROCK EDITION -->
-        <div class="mc-toast-mini flex flex-col justify-center">
-            <span class="mc-title uppercase">
+        <div class="mc-toast-mini">
+            <span class="mc-title">
                 Bedrock Edition
             </span>
             <span class="mc-subtext">
