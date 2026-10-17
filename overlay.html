@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mineplix Achievement Cards Decor</title>
+    
+    <!-- Google Fonts: Press Start 2P -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Reset & Setup Window */
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Press Start 2P', monospace;
+            user-select: none;
+            -webkit-user-select: none;
+            width: 100%;
+        }
+
+        /* Minecraft Achievement Toast Frame Mini */
+        .mc-toast-mini {
+            background-color: rgba(33, 33, 33, 0.95);
+            border: 2px solid #000000;
+            box-shadow: 
+                inset -2px -2px 0px 0px #151515,
+                inset 2px 2px 0px 0px #4a4a4a,
+                0px 4px 8px rgba(0, 0, 0, 0.5);
+            image-rendering: pixelated;
+            padding: 10px 14px;
+        }
+
+        /* Typography Minecraft (Rata Kiri / Left-Aligned) */
+        .mc-title {
+            color: #FFFF55;
+            text-shadow: 1px 1px 0px #3F3F00;
+            font-size: 10px;
+            line-height: 1.5;
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+
+        .mc-subtext {
+            color: #FFFFFF;
+            text-shadow: 1px 1px 0px #3F3F3F;
+            font-size: 8px;
+            line-height: 1.5;
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body class="p-3 flex justify-center">
+
+    <!-- Container Utama dengan gap antar card diperbesar -->
+    <div class="flex flex-col gap-4 w-full max-w-[280px]">
+
+        <!-- CARD 1: JAVA EDITION -->
+        <div class="mc-toast-mini flex flex-col justify-center">
+            <span class="mc-title uppercase">
+                Java Edition
+            </span>
+            <span class="mc-subtext">
+                go.mineplix.biz.id
+            </span>
+        </div>
+
+        <!-- CARD 2: BEDROCK EDITION -->
+        <div class="mc-toast-mini flex flex-col justify-center">
+            <span class="mc-title uppercase">
+                Bedrock Edition
+            </span>
+            <span class="mc-subtext">
+                go.mineplix.biz.id:25565
+            </span>
+        </div>
+
+    </div>
+
+</body>
+</html>
