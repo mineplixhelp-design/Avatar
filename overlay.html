@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         html, body {
             margin: 0;
             padding: 0;
@@ -17,6 +21,7 @@
             user-select: none;
             -webkit-user-select: none;
             width: 100%;
+            overflow-x: hidden;
         }
 
         body {
@@ -43,7 +48,7 @@
         }
 
         .mc-toast-mini:not(:last-child) {
-            margin-bottom: 24px;
+            margin-bottom: 2px;
         }
 
         .mc-title {
@@ -58,7 +63,7 @@
 
         .mc-subtext {
             color: #FFFFFF;
-            font-size: 8px;
+            font-size: 10px;
             line-height: 1.5;
             display: block;
             width: 100%;
